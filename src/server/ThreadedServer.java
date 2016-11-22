@@ -132,7 +132,10 @@ public class ThreadedServer implements IServerControler {
 									// exception et force l'arrêt immédiat
 		}
 	}
-
+	
+	/**
+	 * A MODIFIER POUR SERIALISER NOS REQUETES
+	 */
 	private boolean handleGraphicalRequest(PrintStream output, String request) {
 		if (request.startsWith("circle") || 
 				request.startsWith("rectangle")
@@ -364,6 +367,9 @@ public class ThreadedServer implements IServerControler {
 			}
 		}
 
+		/**
+		 * A MODIFIER POUR SERIALISER NOS REQUETES
+		 */
 		private void handleRequests() {
 			while (checkConnection()) {
 				String requeteclient = null;

@@ -129,6 +129,9 @@ public class ThreadedClient implements ISocketControler {
 		}
 	}
 
+	/**
+	 * A MODIFIER POUR SERIALISER NOS REQUETES
+	 */
 	private void handleServerResponse() {
 		info(response == null ? "session ended" : response);
 		if (response == null) {
@@ -400,7 +403,10 @@ public class ThreadedClient implements ISocketControler {
 	public List<String> getModel() {
 		return model_;
 	}
-
+	
+	/**
+	 * A MODIFIER POUR SERIALISER NOS REQUETES
+	 */
 	private void addCommand(String cmd) {
 		model_.add(cmd);
 	}
