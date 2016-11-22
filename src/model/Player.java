@@ -13,7 +13,21 @@ public class Player {
 		this.state = state;
 	}
 
-
+	/**
+	 * Check the state of all boat for the current player
+	 * Return true only if all boat are sunk
+	 * @return boolean - isDead
+	 */
+	public boolean isDead(){
+		boolean isDead = true;
+		for(Boat boat : ship){
+			if(!boat.isSunk()){
+				isDead= false;
+			}
+		}
+		return isDead;
+	}
+	
 	public String getPseudo() {
 		return Pseudo;
 	}

@@ -5,7 +5,7 @@ public class Box {
 	private int x;
 	private int y;
 	//The state will have an impact on the drawing color
-	private String state; //i.e empty, boat safe, boat touched
+	private String state; //i.e empty, safe, touched
 	
 	
 	public Box(int x, int y, String state) {

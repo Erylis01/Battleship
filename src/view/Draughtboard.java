@@ -1,4 +1,4 @@
-package model;
+package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -59,7 +59,7 @@ public class Draughtboard extends JFrame {
 		getContentPane().add(panel);
 		panel.setLayout(null);
 
-		textFieldIp = new JTextField();
+		textFieldIp = new JTextField("127.0.0.1");
 		textFieldIp.setBounds(92, 96, 146, 27);
 		panel.add(textFieldIp);
 		textFieldIp.setColumns(10);
@@ -69,7 +69,7 @@ public class Draughtboard extends JFrame {
 		lblIp.setBounds(48, 35, 27, 27);
 		panel.add(lblIp);
 
-		textFieldPort = new JTextField();
+		textFieldPort = new JTextField("8080");
 		textFieldPort.setColumns(10);
 		textFieldPort.setBounds(92, 37, 146, 27);
 		panel.add(textFieldPort);
