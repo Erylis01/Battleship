@@ -1,5 +1,7 @@
 package client;
 
+import model.Draughtboard;
+
 public class GameClient {
 
 	/**
@@ -7,6 +9,6 @@ public class GameClient {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-				
+				Draughtboard dg = new Draughtboard();
 	}
 }
