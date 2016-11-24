@@ -6,15 +6,12 @@ import javax.swing.JButton;
 
 import client.clientController;
 
-public class uiListener implements ActionListener{
+public class UiListener implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
 		if(((JButton) e.getSource()).getText().equals("Connexion")){
 			clientController.connect();
-		}
-		
+		}		
 	}
-
 }

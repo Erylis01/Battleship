@@ -3,24 +3,21 @@ package view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import sun.rmi.runtime.Log;
 import java.awt.GridLayout;
-import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Font;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.CompoundBorder;
+
+
+import model.Board;
+
 import javax.swing.JTextArea;
 
 public class Draughtboard extends JFrame {
@@ -31,8 +28,9 @@ public class Draughtboard extends JFrame {
 	private JTextField textFieldIp;
 	private JTextField textFieldPort;
 	private JTextField textField;
-
+	
 	public Draughtboard() {
+		
 
 		// Centrage de la fenêtre et choix de la taille de la fenêtre
 		Dimension screenSize = new Dimension(Toolkit.getDefaultToolkit().getScreenSize());
@@ -84,16 +82,11 @@ public class Draughtboard extends JFrame {
 		panel.add(btnNewButton);
 
 		JPanel grilleOpponent = new JPanel();
-		grilleOpponent.setBounds(48, 195, 334, 335);
-		grilleOpponent.setOpaque(false);
-		GridLayout gl_grilleOpponent = new GridLayout(10, 10, 0, 0);
-		grilleOpponent.setLayout(gl_grilleOpponent);
-		for (int i = 0; i < (10 * 10); i++) {
-			final JLabel label = new JLabel("");
-			label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			grilleOpponent.add(label);
-		}
+		grilleOpponent.setBounds(48, 195, 340, 335);
+		//grilleOpponent.setOpaque(false);
+		Board board = new Board(grilleOpponent);
 		panel.add(grilleOpponent);
+		grilleOpponent.setLayout(null);
 
 		JPanel grillePlayer = new JPanel();
 		grillePlayer.setBounds(612, 195, 340, 335);

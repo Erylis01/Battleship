@@ -1,16 +1,49 @@
 package model;
 
-public class Box {
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+import javax.swing.JComponent;
+
+public class Box extends JComponent{
 	
+
+	private static final long serialVersionUID = 2384294667973519463L;
+	
+	//Position
 	private int x;
 	private int y;
+	
+	//Size
+	private int width;
+	private int height;
+	
 	//The state will have an impact on the drawing color
 	private String state; //i.e empty, safe, touched
+
+	public Box(int x, int y, int width, int height,String state){
+		this.x=x;
+		this.y=y;
+		this.width=width;
+		this.height=height;
+		this.state=state;
+	}
 	
-	
-	public Box(int x, int y, String state) {
-		this.x = x;
-		this.y = y;
+	@Override
+	public void paint(Graphics g) {
+		// TODO Auto-generated method stub
+		super.paint(g);
+		 g.setColor(Color.BLACK);
+	     g.drawRect(x,y,width,height);
+	}
+
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
 		this.state = state;
 	}
 
@@ -35,15 +68,26 @@ public class Box {
 	}
 
 
-	public String getState() {
-		return state;
+	public int getWidth() {
+		return width;
 	}
 
 
-	public void setState(String state) {
-		this.state = state;
+	public void setWidth(int width) {
+		this.width = width;
 	}
-	
+
+
+	public int getHeight() {
+		return height;
+	}
+
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+
 	
 	
 }
