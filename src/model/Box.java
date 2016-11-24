@@ -3,6 +3,7 @@ package model;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 import javax.swing.JComponent;
 
@@ -32,10 +33,10 @@ public class Box extends JComponent{
 	
 	@Override
 	public void paint(Graphics g) {
-		// TODO Auto-generated method stub
-		super.paint(g);
-		 g.setColor(Color.BLACK);
-	     g.drawRect(x,y,width,height);
+		// TODO Auto-generated method stub   
+	    g.setColor(Color.BLACK);
+	    g.drawRect(x,y,width,height);
+
 	}
 
 
