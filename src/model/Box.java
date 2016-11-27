@@ -8,7 +8,9 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
-public class Box extends JButton implements ActionListener{
+import client.clientController;
+
+public class Box extends JButton implements ActionListener {
 
 	private static final long serialVersionUID = 2384294667973519463L;
 
@@ -141,6 +143,7 @@ public class Box extends JButton implements ActionListener{
 
 	/**
 	 * Get the state of the box
+	 * 
 	 * @return
 	 */
 	public String getState() {
@@ -149,17 +152,24 @@ public class Box extends JButton implements ActionListener{
 
 	/**
 	 * Set the state of the box
+	 * 
 	 * @param state
 	 */
 	public void setState(String state) {
 		this.state = state;
 	}
 
-
-	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		this.setState("touch");
-		this.setBorder(BorderFactory.createLineBorder(Color.RED));		
+		if (clientController.isPlacementActive() && this.getParent().equals(clientController.getBoard()) && (!clientController.isFirstCaseDone() || (clientController.getLastX() - xCoord <= 1 && clientController.getLastY() - yCoord <= 1 ))) {
+			this.setState("safe");
+			this.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+			this.setBackground(Color.BLUE);
+			clientController.setSynchronizingVar(clientController.getBoard().board[xCoord][yCoord]);
+			clientController.setFirstCaseDone(true);
+			clientController.setLastX(xCoord);
+			clientController.setLastY(yCoord);
+			clientController.synchronizingVar.notify();
+		}
 	}
 
 }

@@ -10,6 +10,9 @@ import sun.rmi.runtime.Log;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
+
+import client.clientController;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -89,12 +92,14 @@ public class Draughtboard extends JFrame {
 		Board boardLeft = new Board(10, 10, 48, 195, 340, 340);
 		boardLeft.addBoxes();
 		panel.add(boardLeft);
+		clientController.setBoard(boardLeft);
 
 		// Drawing of the right grid
 		Board boardRight = new Board(10, 10, 550, 195, 340, 340);
 		boardRight.addBoxes();
 		panel.add(boardRight);
-
+		clientController.setBoardOpponent(boardRight);
+		
 		// Adding a Background
 		JLabel lblFond = new JLabel("fond");
 		lblFond.setIcon(new ImageIcon(Log.class.getResource("/assets/fond_logpan.jpg")));
