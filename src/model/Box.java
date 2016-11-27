@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.Graphics;
+
 import javax.swing.JButton;
 
 public class Box extends JButton{
@@ -7,9 +9,13 @@ public class Box extends JButton{
 
 	private static final long serialVersionUID = 2384294667973519463L;
 	
-	//Position
+	//Position graphique
 	private int x;
 	private int y;
+	
+	//Position grille
+	private int xCoord;
+	private int yCoord;
 	
 	//Size
 	private int width;
@@ -21,11 +27,22 @@ public class Box extends JButton{
 	public Box(int x, int y,int width,int height,String state){
 		this.x=x;
 		this.y=y;
+		xCoord=x/width;
+		yCoord=y/height;
 		this.width=width;
 		this.height=height;
 		this.state=state;
 	}
-
+	
+	
+	public int getXCoordinate(){
+		return xCoord;
+	}
+	
+	public int getYCoordinate(){
+		return yCoord;
+	}
+	
 	public int getX() {
 		return x;
 	}
@@ -66,5 +83,5 @@ public class Box extends JButton{
 		this.state = state;
 	}
 	
-	
+
 }

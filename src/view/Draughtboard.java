@@ -1,7 +1,9 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
@@ -16,6 +18,7 @@ import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import java.awt.GridBagConstraints;
 
 import model.Board;
 import model.Box;
@@ -56,7 +59,7 @@ public class Draughtboard extends JFrame {
 		panel = new JPanel();
 		panel.setBounds(0, 0, 994, 571);
 		panel.setLayout(null);
-		this.getContentPane().add(panel);
+		this.setContentPane(panel);
 		
 		
 		textFieldIp = new JTextField("127.0.0.1");
@@ -83,12 +86,44 @@ public class Draughtboard extends JFrame {
 		btnNewButton.setBounds(282, 66, 123, 38);
 		panel.add(btnNewButton);
 
+		
+		//Tracé de la grille de gauche
 		JPanel grilleOpponent = new JPanel();
 		grilleOpponent.setBounds(48, 195, 340, 340);
 		grilleOpponent.setLayout(new GridLayout(10,10));
-		Board b =new Board(grilleOpponent);
+		int boxHeight = ((grilleOpponent.getHeight())/10);
+	    int boxWidth = ((grilleOpponent.getWidth())/10);
+	    
+		for (int col =0; col < 10; col++) {
+            for (int row = 0; row < 10; row++) {
+            	Box box = new Box(0+row*boxHeight,0+col*boxWidth,boxWidth,boxHeight,"vide");
+            	box.setBackground(Color.white);
+            	box.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            	box.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            	box.setPreferredSize(new java.awt.Dimension(boxHeight, boxWidth));
+                grilleOpponent.add(box);
+                }
+        }
 		panel.add(grilleOpponent);
-
+		
+		
+		//Tracé de la grille de droite
+				JPanel grilleFriend = new JPanel();
+				grilleFriend.setBounds(550, 195, 340, 340);
+				grilleFriend.setLayout(new GridLayout(10,10));
+			    
+				for (int col =0; col < 10; col++) {
+		            for (int row = 0; row < 10; row++) {
+		            	Box box = new Box(0+row*boxHeight,0+col*boxWidth,boxWidth,boxHeight,"vide");
+		            	box.setBackground(Color.white);
+		            	box.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		            	box.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		            	box.setPreferredSize(new java.awt.Dimension(boxHeight, boxWidth));
+		            	grilleFriend.add(box);
+		                }
+		        }
+				panel.add(grilleFriend);
+				
 		JTextArea textArea = new JTextArea();
 		textArea.setBounds(541, 35, 357, 80);
 		panel.add(textArea);
