@@ -17,8 +17,8 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-
 import model.Board;
+import model.Box;
 
 import javax.swing.JTextArea;
 
@@ -30,9 +30,8 @@ public class Draughtboard extends JFrame {
 	private JTextField textFieldIp;
 	private JTextField textFieldPort;
 	private JTextField textField;
-	
+
 	public Draughtboard() {
-		
 
 		// Centrage de la fenêtre et choix de la taille de la fenêtre
 		Dimension screenSize = new Dimension(Toolkit.getDefaultToolkit().getScreenSize());
@@ -51,14 +50,15 @@ public class Draughtboard extends JFrame {
 		// Enregistrement de l'option EXIT_ON_CLOSE lors de la fermeture de la
 		// fenêtre (arrêt du procéssus)
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		getContentPane().setLayout(null);
+		this.getContentPane().setLayout(null);
 
 		// Ajout d'un panel qui contiendra tout
 		panel = new JPanel();
 		panel.setBounds(0, 0, 994, 571);
-		getContentPane().add(panel);
 		panel.setLayout(null);
-
+		this.getContentPane().add(panel);
+		
+		
 		textFieldIp = new JTextField("127.0.0.1");
 		textFieldIp.setBounds(92, 96, 146, 27);
 		panel.add(textFieldIp);
@@ -84,22 +84,10 @@ public class Draughtboard extends JFrame {
 		panel.add(btnNewButton);
 
 		JPanel grilleOpponent = new JPanel();
-		grilleOpponent.setBounds(48, 195, 340, 335);
-		//grilleOpponent.setOpaque(false);
-		Board board = new Board(grilleOpponent);
+		grilleOpponent.setBounds(48, 195, 340, 340);
+		grilleOpponent.setLayout(new GridLayout(10,10));
+		Board b =new Board(grilleOpponent);
 		panel.add(grilleOpponent);
-		grilleOpponent.setLayout(null);
-
-		JPanel grillePlayer = new JPanel();
-		grillePlayer.setBounds(612, 195, 340, 335);
-		grillePlayer.setOpaque(false);
-		grillePlayer.setLayout(new GridLayout(10, 10, 0, 0));
-		for (int i = 0; i < (10 * 10); i++) {
-			final JLabel label = new JLabel("");
-			label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			grillePlayer.add(label);
-		}
-		panel.add(grillePlayer);
 
 		JTextArea textArea = new JTextArea();
 		textArea.setBounds(541, 35, 357, 80);

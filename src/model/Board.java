@@ -1,5 +1,10 @@
 package model;
 
+import java.awt.Color;
+import java.awt.Cursor;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class Board {
@@ -19,20 +24,28 @@ public class Board {
 	public Board(JPanel panel) {
 		
 		//taille d'une case
-	    int boxHeight = (panel.getHeight()/nbBriquesHauteur);
-	    int boxWidth = (panel.getWidth()/nbBriquesLargeur);
-	    /*System.out.println(panel.getHeight());
-	    box = new Box(0,0,boxWidth,boxHeight,"vide");
-        board[0][0]= box;
-        panel.add(box);*/
+	    int boxHeight = ((panel.getHeight())/nbBriquesHauteur);
+	    int boxWidth = ((panel.getWidth())/nbBriquesLargeur);
         
 		for (int col =0; col < nbBriquesHauteur; col++) {
-            for (int lig = 0; lig < nbBriquesLargeur; lig++) {
-                box = new Box(col*boxWidth,lig*boxHeight,boxWidth,boxHeight,"vide");
-                board[col][lig]= box;
-                panel.add(box);
+            for (int row = 0; row < nbBriquesLargeur; row++) {
+            	Box box = new Box(col,row,boxWidth,boxHeight,"vide");
+            	box.setBackground(Color.white);
+            	box.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            	box.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            	box.setPreferredSize(new java.awt.Dimension(boxHeight, boxWidth));
+            	
+                JButton b = new JButton();
+                b.setBackground(Color.WHITE);
+                b.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                b.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                b.setPreferredSize(new java.awt.Dimension(boxHeight, boxWidth));
+                
+                panel.add(b);
             }
         }
+		panel.revalidate();
+        panel.repaint();
 	}
 
 	public Box[][] getBoard() {
