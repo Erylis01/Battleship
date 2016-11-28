@@ -29,6 +29,11 @@ public class Box extends JButton implements ActionListener {
 	// The state will have an impact on the drawing color
 	private String state; // i.e empty, safe, touched
 
+	// Placing state boolean
+	private static boolean isPlacementActive = true;
+	private static int currentBoat = 1;
+	private static boolean doneBoat = false;
+
 	/**
 	 * Create a Box (JButton)
 	 * 
@@ -160,16 +165,61 @@ public class Box extends JButton implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-		if (clientController.isPlacementActive() && this.getParent().equals(clientController.getBoard()) && (!clientController.isFirstCaseDone() || (clientController.getLastX() - xCoord <= 1 && clientController.getLastY() - yCoord <= 1 ))) {
-			this.setState("safe");
-			this.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-			this.setBackground(Color.BLUE);
-			clientController.setSynchronizingVar(clientController.getBoard().board[xCoord][yCoord]);
-			clientController.setFirstCaseDone(true);
-			clientController.setLastX(xCoord);
-			clientController.setLastY(yCoord);
-			clientController.synchronizingVar.notify();
+		if (isPlacementActive && currentBoat == 1 && this.getParent().equals(clientController.getBoard())) {
+			if (clientController.getTwoBoat()[0] == null) {
+				this.setState("safe");
+				this.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+				this.setBackground(Color.BLUE);
+				clientController.getTwoBoat()[0] = this;
+			} else {
+				if (clientController.getTwoBoat()[1] == null
+						&& ((Math.abs(xCoord - clientController.getTwoBoat()[0].getXCoordinate()) == 1)
+								&& (Math.abs(yCoord - clientController.getTwoBoat()[0].getYCoordinate()) == 0))
+						|| ((Math.abs(xCoord - clientController.getTwoBoat()[0].getXCoordinate()) == 0)
+								&& (Math.abs(yCoord - clientController.getTwoBoat()[0].getYCoordinate()) == 1))) {
+					this.setState("safe");
+					this.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+					this.setBackground(Color.BLUE);
+					clientController.getTwoBoat()[1] = this;
+					doneBoat = true;
+				}
+			}
+		}
+
+		if (isPlacementActive && currentBoat == 2 && this.getParent().equals(clientController.getBoard())) {
+			if (clientController.getThirdFstBoat()[0] == null) {
+				this.setState("safe");
+				this.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+				this.setBackground(Color.BLUE);
+				clientController.getThirdFstBoat()[0] = this;
+			} else {
+				if (clientController.getThirdFstBoat()[1] == null
+						&& ((Math.abs(xCoord - clientController.getThirdFstBoat()[0].getXCoordinate()) == 1)
+								&& (Math.abs(yCoord - clientController.getThirdFstBoat()[0].getYCoordinate()) == 0))
+						|| ((Math.abs(xCoord - clientController.getThirdFstBoat()[0].getXCoordinate()) == 0)
+								&& (Math.abs(yCoord - clientController.getThirdFstBoat()[0].getYCoordinate()) == 1))) {
+					this.setState("safe");
+					this.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+					this.setBackground(Color.BLUE);
+					clientController.getThirdFstBoat()[1] = this;
+				} else if (clientController.getThirdFstBoat()[2] == null
+						&& ((Math.abs(xCoord - clientController.getThirdFstBoat()[1].getXCoordinate()) == 1)
+								&& (Math.abs(yCoord - clientController.getThirdFstBoat()[1].getYCoordinate()) == 0))
+						|| ((Math.abs(xCoord - clientController.getThirdFstBoat()[1].getXCoordinate()) == 0)
+								&& (Math.abs(yCoord - clientController.getThirdFstBoat()[1].getYCoordinate()) == 1))) {
+					this.setState("safe");
+					this.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+					this.setBackground(Color.BLUE);
+					clientController.getThirdFstBoat()[2] = this;
+					doneBoat = true;
+				}
+			}
+		}
+		
+
+		if(doneBoat){
+			currentBoat += 1;
+			doneBoat = false;
 		}
 	}
-
 }

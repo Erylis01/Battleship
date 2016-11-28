@@ -10,17 +10,20 @@ public class clientController {
 
 	private boolean isItYourTurn;
 	private static boolean isGameSet = false;
-	private static boolean isPlacementActive = false;
 	
-	
-	public static Box synchronizingVar = new Box(1,1,1,1,"qsdfqsdfqsf");
-	private static boolean firstCaseDone = false;
-	private static int lastX;
-	private static int lastY;
-	
+	private static Box[] twoBoat = new Box[2];
+	private static Box[] thirdFstBoat = new Box[3];
+	private static Box[] thirdSndBoat = new Box[3];
+	private static Box[] fourthBoat = new Box[4];
+	private static Box[] fifthBoat = new Box[5];
+	private static Boat two = new Boat(twoBoat,"safe");
+	private static Boat threeOne = new Boat(twoBoat,"safe");
+	private static Boat threeTwo = new Boat(twoBoat,"safe");
+	private static Boat four = new Boat(twoBoat,"safe");
+	private static Boat five = new Boat(twoBoat,"safe");
 	private Player player;
-	private static Boat[] ship = new Boat[5];
-	
+	private static Boat[] ship = {two,threeOne,threeTwo,four,five};
+
 	
 	private static Board board;
 	private static Board boardOpponent;
@@ -47,7 +50,7 @@ public class clientController {
 		 * vainqueur
 		 */
 		Draughtboard dg = new Draughtboard();
-		placeShip(1);
+
 		
 	}
 
@@ -66,27 +69,7 @@ public class clientController {
 	}
 
 	public  static void placeShip(int i) throws InterruptedException{
-		int k = 0;
-		Box[] currentBoatPosition = new Box[i];
-		Boat currentBoat = new Boat(currentBoatPosition,"safe");
-		System.out.println(synchronizingVar);
-		while(k<i){
-		isPlacementActive = true;	
-		synchronizingVar = currentBoatPosition[k];
-		
-		synchronized(synchronizingVar){
-		synchronizingVar.wait();
-		}
-		
-		currentBoatPosition[k] = synchronizingVar;
-		k+=1;		
-		synchronizingVar = new Box(1,1,1,1,"");
-		}
-		isPlacementActive = false;
-		firstCaseDone = false;
-		lastX = (Integer) null;
-		lastY = (Integer) null;
-		ship[i]=currentBoat;		
+	
 	}
 	
 	public boolean isItYourTurn() {
@@ -129,44 +112,45 @@ public class clientController {
 		this.isGameSet = isGameSet;
 	}
 
-	public static boolean isPlacementActive() {
-		return isPlacementActive;
+	public static Box[] getTwoBoat() {
+		return twoBoat;
 	}
 
-	public void setPlacementActive(boolean isPlacementActive) {
-		this.isPlacementActive = isPlacementActive;
+	public static void setTwoBoat(Box[] twoBoat) {
+		clientController.twoBoat = twoBoat;
 	}
 
-	public static Box getSynchronizingVar() {
-		return synchronizingVar;
+	public static Box[] getThirdFstBoat() {
+		return thirdFstBoat;
 	}
 
-	public static void setSynchronizingVar(Box synchronizingVarToStore) {
-		synchronizingVar = synchronizingVarToStore;
+	public static void setThirdFstBoat(Box[] thirdFstBoat) {
+		clientController.thirdFstBoat = thirdFstBoat;
 	}
 
-	public static boolean isFirstCaseDone() {
-		return firstCaseDone;
+	public static Box[] getThirdSndBoat() {
+		return thirdSndBoat;
 	}
 
-	public static void setFirstCaseDone(boolean firstCaseDoneToStore) {
-		firstCaseDone = firstCaseDoneToStore;
+	public static void setThirdSndBoat(Box[] thirdSndBoat) {
+		clientController.thirdSndBoat = thirdSndBoat;
 	}
 
-	public static int getLastX() {
-		return lastX;
+	public static Box[] getFourthBoat() {
+		return fourthBoat;
 	}
 
-	public static void setLastX(int lastXtoStore) {
-		lastX = lastXtoStore;
+	public static void setFourthBoat(Box[] fourthBoat) {
+		clientController.fourthBoat = fourthBoat;
 	}
 
-	public static int getLastY() {
-		return lastY;
+	public static Box[] getFifthBoat() {
+		return fifthBoat;
 	}
 
-	public static void setLastY(int lastYtoStore) {
-		lastY = lastYtoStore;
+	public static void setFifthBoat(Box[] fifthBoat) {
+		clientController.fifthBoat = fifthBoat;
 	}
 
+    
 }

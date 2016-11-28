@@ -4,7 +4,7 @@ public class Boat {
 	
 	private Box[] position;
 	private String state; //i.e safe, touched, drown
-	
+
 	public Boat(Box[] position, String state) {
 		super();
 		this.position = position;
