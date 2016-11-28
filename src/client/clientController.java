@@ -61,6 +61,8 @@ public class clientController {
 		 * Appeller ici la méthode de connexion du threadedClient Envoi de son
 		 * board au serveur pour stockage Le boardOpponent sera récupérer lors
 		 * du pairing par le serveur
+		 * 
+		 * Elle sera aussi en charge de la l'initialisation du player avec l'aide du champs pseudo
 		 */
 		if(isGameSet){
 			
