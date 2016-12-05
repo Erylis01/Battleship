@@ -48,16 +48,14 @@ public class Client {
 				
 																									// aussi
 																									// [fin]
-				String theLine = userIn.readLine();
+				String theLine = "Ajout;"+Draughtboard.getTextField_pseudo().getText();
 				if (theLine.equals("."))
 					break;
 				out.println(theLine);
 				out.flush();
 				Thread.sleep(100);
 
-				System.out.println(networkIn.readLine());// le serveur ne
-															// retourne qu'une
-															// seule ligne
+				Draughtboard.getTextField_pseudo().setText("\n"+networkIn.readLine());
 			}
 		} catch (IOException e) {
 			System.err.println(e);

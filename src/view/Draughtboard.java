@@ -31,7 +31,7 @@ public class Draughtboard implements ActionListener {
 	private JTextField textFieldIp;
 	private JTextField textFieldPort;
 	private JPanel panel;
-	private JTextField textField_pseudo;
+	private static JTextField textField_pseudo;
 	private static JTextArea console;
 	private JPanel boardOpponent;
 	private JPanel boardPlayer;
@@ -209,6 +209,14 @@ public class Draughtboard implements ActionListener {
 
 	public void setConsole(JTextArea console) {
 		this.console = console;
+	}
+
+	public static JTextField getTextField_pseudo() {
+		return textField_pseudo;
+	}
+
+	public void setTextField_pseudo(JTextField textField_pseudo) {
+		this.textField_pseudo = textField_pseudo;
 	}
 	
 	

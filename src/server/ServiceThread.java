@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class ServiceThread extends Thread {
 	int id;
@@ -14,6 +16,8 @@ public class ServiceThread extends Thread {
 	private boolean mustStop;
 	private Object lock;
 	private final static String TABS = "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t";
+	
+	private HashMap<String,Integer> currentGame = new HashMap<>();
 
 	public ServiceThread(int id, Socket _socketService,boolean mustStop,Object lock) {
 		this.id = id;
@@ -22,6 +26,8 @@ public class ServiceThread extends Thread {
 		this.lock=lock;
 	}
 
+	
+	
 	private void log(String mesg) {
 		synchronized (lock) {
 			System.out.println(mesg);
@@ -41,12 +47,22 @@ public class ServiceThread extends Thread {
 
 	private void traiteClient(Socket socketService) throws IOException {
 		taskLog("le client " + socketService.getRemoteSocketAddress() + " s'est connecté");
-		PrintStream output;
+		PrintStream output;		
 		output = new PrintStream(socketService.getOutputStream(), true);// autoflush
 		BufferedReader networkIn = new BufferedReader(new InputStreamReader(socketService.getInputStream()));
+		
+		
+		
 		while (!mustStop && !interrupted) {
 			String requeteclient = networkIn.readLine(); // bloquant
-			if (requeteclient == null) {
+			String[] requestToDo = requeteclient.split(";");
+			
+			if(requestToDo[0].equals("Ajout")){
+				addPlayer(requestToDo[1]);
+				output.println("Vous étes connecté au serveur, nous allons vous mettre en relation avec un adversaire");
+			}
+			
+/*			if (requeteclient == null) {
 				taskLog("Le client s'est déconnecté. Fin de la session");
 				break;
 			}
@@ -70,7 +86,7 @@ public class ServiceThread extends Thread {
 					} else
 							output.println("commande inconnue ");
 					}
-				}
+				}*/
 			}
 		socketService.close();
 		taskLog("arrét de la session");
@@ -89,6 +105,13 @@ public class ServiceThread extends Thread {
 					this.interrupt();
 				}
 			}
+		}
+	}
+	
+	public void addPlayer(String s){
+		if(!currentGame.containsKey(s)){
+			Integer game = new Integer(Math.abs(currentGame.size())+1);
+			currentGame.put(s, game);
 		}
 	}
 }
