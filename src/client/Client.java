@@ -7,45 +7,56 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import controller.GameController;
+import model.BoardPlayer;
+
 public class Client {
 
 	private static final int PORT = 8051;
 
-	private static final String hostname = "159.31.249.152"; //adapter au serveur
+	private static final String hostname = "159.31.249.152"; // adapter au
+																// serveur
 
 	public static void main(String[] args) {
+		BoardPlayer boardPlayer = new BoardPlayer();
+		GameController game = new GameController(boardPlayer);
+	}
+
+	public void connectServer() {
 		PrintWriter out = null;
 		BufferedReader networkIn = null;
-		
+
 		System.out.println("(démarrage du client) veuillez patienter...");
 		System.out.println("(le serveur est) " + hostname + ":" + PORT);
 		try {
-		
+
 			Socket theSocket = new Socket();
 			theSocket.connect(new InetSocketAddress(hostname, PORT), 200);
 			int localPort = theSocket.getLocalPort();
-			System.out.println("Client démarré sur le port"  + ":" + localPort);
+			System.out.println("Client démarré sur le port" + ":" + localPort);
 
-			networkIn = new BufferedReader(new InputStreamReader(
-					theSocket.getInputStream()));
+			networkIn = new BufferedReader(new InputStreamReader(theSocket.getInputStream()));
 
-			BufferedReader userIn = new BufferedReader(new InputStreamReader(
-					System.in));
+			BufferedReader userIn = new BufferedReader(new InputStreamReader(System.in));
 
 			out = new PrintWriter(theSocket.getOutputStream());
 
 			System.out.println("Connecté au serveur");
 
 			while (true) {
-				System.out.println("entrez une requête au clavier (je comprends stop,end,date)");//et aussi [fin]
-				String theLine = userIn.readLine(); 
+				System.out.println("entrez une requête au clavier (je comprends stop,end,date)");// et
+																									// aussi
+																									// [fin]
+				String theLine = userIn.readLine();
 				if (theLine.equals("."))
 					break;
 				out.println(theLine);
 				out.flush();
 				Thread.sleep(100);
-				
-				System.out.println(networkIn.readLine());// le serveur ne retourne qu'une seule ligne
+
+				System.out.println(networkIn.readLine());// le serveur ne
+															// retourne qu'une
+															// seule ligne
 			}
 		} catch (IOException e) {
 			System.err.println(e);
@@ -75,9 +86,8 @@ public class Client {
 		}
 	}
 
-	
 	private static final String prefix = "192.168.1";
-	
+
 	public static void scanOpenedPorts(String[] args) {
 		for (int j = 1; j < 255; j++) {
 			String ip = prefix + "." + j;
@@ -90,6 +100,5 @@ public class Client {
 			}
 		}
 	}
-
 
 }
