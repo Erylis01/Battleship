@@ -113,7 +113,7 @@ public class GameController {
 					size++;
 				}
 			}
-			if (size == 7) {
+			if (size == 9) {
 				console.setText("Placer votre contre-torpilleurs (3 cases)");
 			}
 		}
@@ -150,7 +150,7 @@ public class GameController {
 					size++;
 				}
 			}
-			if (size == 11) {
+			if (size == 12) {
 				console.setText("Placer votre sous-marin (3 cases)");
 			}
 		}
@@ -187,7 +187,7 @@ public class GameController {
 					size++;
 				}
 			}
-			if (size == 14) {
+			if (size == 15) {
 				console.setText("Placer votre torpilleur (2 cases)");
 			}
 		}
