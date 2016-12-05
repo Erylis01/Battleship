@@ -7,15 +7,18 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 import controller.GameController;
 import model.BoardPlayer;
 import view.Draughtboard;
 
 public class Client {
 
-	private static final int PORT = 8051;
+	private static int port = 8051;
 
-	private static final String hostname = "159.31.249.22"; // adapter au
+	private static String hostname = null; // adapter au
 																// serveur
 
 	public static void main(String[] args) {
@@ -23,16 +26,18 @@ public class Client {
 		GameController game = new GameController(boardPlayer);
 	}
 
-	public static void connectServer() {
+	public static void connectServer(JTextArea console, JTextField fieldPseudo,JTextField fieldIP, JTextField fieldPort) {
 		PrintWriter out = null;
 		BufferedReader networkIn = null;
+		hostname = fieldIP.getText();
+		port = Integer.parseInt(fieldPort.getText());
 
 		System.out.println("(démarrage du client) veuillez patienter...");
-		System.out.println("(le serveur est) " + hostname + ":" + PORT);
+		System.out.println("(le serveur est) " + hostname + ":" + port);
 		try {
 
 			Socket theSocket = new Socket();
-			theSocket.connect(new InetSocketAddress(hostname, PORT), 200);
+			theSocket.connect(new InetSocketAddress(hostname, port), 200);
 			int localPort = theSocket.getLocalPort();
 			System.out.println("Client démarré sur le port" + ":" + localPort);
 
@@ -42,20 +47,20 @@ public class Client {
 
 			out = new PrintWriter(theSocket.getOutputStream());
 
-			Draughtboard.getConsole().setText("Connecté avec le serveur !");
+			console.setText("Connecté avec le serveur !");
 
 			while (true) {
 				
 																									// aussi
 																									// [fin]
-				String theLine = "Ajout;"+Draughtboard.getTextField_pseudo().getText();
+				String theLine = "Ajout;"+fieldPseudo.getText();
 				if (theLine.equals("."))
 					break;
 				out.println(theLine);
 				out.flush();
 				Thread.sleep(100);
 
-				Draughtboard.getTextField_pseudo().setText("\n"+networkIn.readLine());
+				fieldPseudo.setText("\n"+networkIn.readLine());
 			}
 		} catch (IOException e) {
 			System.err.println(e);
@@ -101,7 +106,7 @@ public class Client {
 	}
 
 	public static int getPort() {
-		return PORT;
+		return port;
 	}
 
 	public static String getHostname() {

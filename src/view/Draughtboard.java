@@ -28,11 +28,11 @@ public class Draughtboard implements ActionListener {
 	private GameController controller;
 	private JFrame frame;
 	private final int LARGEUR_FENETRE = 1000, HAUTEUR_FENETRE = 600;
-	private JTextField textFieldIp;
-	private JTextField textFieldPort;
+	private JTextField fieldIP;
+	private JTextField fieldPort;
 	private JPanel panel;
-	private static JTextField textField_pseudo;
-	private static JTextArea console;
+	private JTextField fieldPseudo;
+	private JTextArea console;
 	private JPanel boardOpponent;
 	private JPanel boardPlayer;
 	private JButton btnCoButton;
@@ -73,12 +73,6 @@ public class Draughtboard implements ActionListener {
 		panel.setLayout(null);
 		frame.setContentPane(panel);
 
-		// Add a TextField to set the port number
-		textFieldIp = new JTextField(Client.getPort()+"");
-		textFieldIp.setBounds(92, 75, 146, 27);
-		panel.add(textFieldIp);
-		textFieldIp.setColumns(10);
-
 		// Add a Label for the ip TextField
 		JLabel lblIp = new JLabel("IP :");
 		lblIp.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -86,26 +80,36 @@ public class Draughtboard implements ActionListener {
 		panel.add(lblIp);
 
 		// Add a TextField to set the ip adress
-		textFieldPort = new JTextField(Client.getHostname());
-		textFieldPort.setColumns(10);
-		textFieldPort.setBounds(92, 37, 146, 27);
-		panel.add(textFieldPort);
+		fieldIP = new JTextField("");
+		fieldIP.setColumns(10);
+		fieldIP.setBounds(92, 37, 146, 27);
+		panel.add(fieldIP);
 
 		// Add a Label for the port TextField
 		JLabel lblPort = new JLabel("Port :");
 		lblPort.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblPort.setBounds(32, 76, 40, 21);
 		panel.add(lblPort);
+		
+		// Add a TextField to set the port number
+		fieldPort = new JTextField("8051");
+		fieldPort.setBounds(92, 75, 146, 27);
+		panel.add(fieldPort);
+		fieldPort.setColumns(10);
 
-		textField_pseudo = new JTextField("");
-		textField_pseudo.setColumns(10);
-		textField_pseudo.setBounds(92, 113, 146, 27);
-		panel.add(textField_pseudo);
-
+		// Add a Label for the pseudo TextField
 		JLabel lblPseudo = new JLabel("Pseudo :");
 		lblPseudo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblPseudo.setBounds(12, 120, 63, 20);
 		panel.add(lblPseudo);
+		
+		// Add a TextField to set the pseudo
+		fieldPseudo = new JTextField("");
+		fieldPseudo.setColumns(10);
+		fieldPseudo.setBounds(92, 113, 146, 27);
+		panel.add(fieldPseudo);
+
+		
 
 		// Add a Button for the connection
 		btnCoButton = new JButton("Connexion");
@@ -175,7 +179,7 @@ public class Draughtboard implements ActionListener {
 		}
 		
 		if(a.getSource()==btnCoButton && GameController.isGameSet()){
-			Client.connectServer();
+			Client.connectServer(console,fieldPseudo,fieldIP,fieldPort);
 		}
 	}
 
@@ -203,7 +207,7 @@ public class Draughtboard implements ActionListener {
 		this.boardPlayer = boardPlayer;
 	}
 
-	public static JTextArea getConsole() {
+	public JTextArea getConsole() {
 		return console;
 	}
 
@@ -211,13 +215,15 @@ public class Draughtboard implements ActionListener {
 		this.console = console;
 	}
 
-	public static JTextField getTextField_pseudo() {
-		return textField_pseudo;
+	public JTextField getFieldPseudo() {
+		return fieldPseudo;
 	}
 
-	public void setTextField_pseudo(JTextField textField_pseudo) {
-		this.textField_pseudo = textField_pseudo;
+	public void setFieldPseudo(JTextField fieldPseudo) {
+		this.fieldPseudo = fieldPseudo;
 	}
+
+
 	
 	
 }

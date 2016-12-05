@@ -237,7 +237,7 @@ public class GameController {
 		Component c = draughtBoard.getBoardPlayer().getComponentAt(col * 34, row * 34);
 		c.setBackground(Color.blue);
 	}
-
+	
 	public BoardPlayer getBoardPlayer() {
 		return boardPlayer;
 	}
