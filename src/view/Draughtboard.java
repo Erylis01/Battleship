@@ -32,7 +32,7 @@ public class Draughtboard implements ActionListener {
 	private JTextField textFieldPort;
 	private JPanel panel;
 	private JTextField textField_pseudo;
-	private JTextArea console;
+	private static JTextArea console;
 	private JPanel boardOpponent;
 	private JPanel boardPlayer;
 	private JButton btnCoButton;
@@ -73,8 +73,8 @@ public class Draughtboard implements ActionListener {
 		panel.setLayout(null);
 		frame.setContentPane(panel);
 
-		// Add a TextField to set the ip address
-		textFieldIp = new JTextField("127.0.0.1");
+		// Add a TextField to set the port number
+		textFieldIp = new JTextField(Client.getPort()+"");
 		textFieldIp.setBounds(92, 75, 146, 27);
 		panel.add(textFieldIp);
 		textFieldIp.setColumns(10);
@@ -85,8 +85,8 @@ public class Draughtboard implements ActionListener {
 		lblIp.setBounds(48, 35, 27, 27);
 		panel.add(lblIp);
 
-		// Add a TextField to set the port
-		textFieldPort = new JTextField("8080");
+		// Add a TextField to set the ip adress
+		textFieldPort = new JTextField(Client.getHostname());
 		textFieldPort.setColumns(10);
 		textFieldPort.setBounds(92, 37, 146, 27);
 		panel.add(textFieldPort);
@@ -202,4 +202,14 @@ public class Draughtboard implements ActionListener {
 	public void setBoardPlayer(JPanel boardPlayer) {
 		this.boardPlayer = boardPlayer;
 	}
+
+	public static JTextArea getConsole() {
+		return console;
+	}
+
+	public void setConsole(JTextArea console) {
+		this.console = console;
+	}
+	
+	
 }

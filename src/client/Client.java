@@ -9,6 +9,7 @@ import java.net.Socket;
 
 import controller.GameController;
 import model.BoardPlayer;
+import view.Draughtboard;
 
 public class Client {
 
@@ -41,10 +42,10 @@ public class Client {
 
 			out = new PrintWriter(theSocket.getOutputStream());
 
-			System.out.println("Connecté au serveur");
+			Draughtboard.getConsole().setText("Connecté avec le serveur !");
 
 			while (true) {
-				System.out.println("entrez une requête au clavier (je comprends stop,end,date)");// et
+				
 																									// aussi
 																									// [fin]
 				String theLine = userIn.readLine();
@@ -101,4 +102,14 @@ public class Client {
 		}
 	}
 
+	public static int getPort() {
+		return PORT;
+	}
+
+	public static String getHostname() {
+		return hostname;
+	}
+
+	
+	
 }
