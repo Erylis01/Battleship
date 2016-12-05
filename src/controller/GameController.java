@@ -25,31 +25,27 @@ public class GameController {
 	private Ship submarine = new Ship(3);
 	private Ship destroyer = new Ship(2);
 
-	
-	
 	public GameController(BoardPlayer boardPlayer) {
 		this.setBoardPlayer(boardPlayer);
 		setDraughtBoard(new Draughtboard(this));
 	}
 
-	
 	public void shipsPlacement(JTextArea console, int col, int row) {
 		if (size < 5) {
 			console.setText("Placer votre porte-avions (5 cases)");
-			carrierPlacement(col, row,console);
+			carrierPlacement(col, row, console);
 		} else if (size >= 5 && size < 9) {
-			battleshipPlacement(col, row,console);
+			battleshipPlacement(col, row, console);
 		} else if (size >= 9 && size < 12) {
-			cruiserPlacement(col, row,console);
+			cruiserPlacement(col, row, console);
 		} else if (size >= 12 && size < 15) {
-			submarinePlacement(col, row,console);
+			submarinePlacement(col, row, console);
 		} else if (size >= 15 && size < 17) {
-			destroyerPlacement(col, row,console);
+			destroyerPlacement(col, row, console);
 		}
 	}
 
-	
-	public void carrierPlacement(int col, int row,JTextArea console) {
+	public void carrierPlacement(int col, int row, JTextArea console) {
 		if (empty.equals(boardPlayer.getBoard()[row][col]) && size == 0) {
 			updateOneCell(carrier, row, col);
 			size++;
@@ -59,13 +55,15 @@ public class GameController {
 					&& carrier.getShip()[0][1].equals(Integer.toString(col))) {
 				inCol = true;
 				updateOneCell(carrier, row, col);
+				size++;
 			} else if ((carrier.getShip()[0][1].equals(Integer.toString(col + 1))
 					|| carrier.getShip()[0][1].equals(Integer.toString(col - 1)))
 					&& carrier.getShip()[0][0].equals(Integer.toString(row))) {
 				inRow = true;
 				updateOneCell(carrier, row, col);
+				size++;
 			}
-			size++;
+
 		} else if ((empty.equals(boardPlayer.getBoard()[row][col])) && size >= 2) {
 			if (inCol && !inRow) {
 				if (boardPlayer.adjacentBoxColumn(carrier, col, row)) {
@@ -78,7 +76,7 @@ public class GameController {
 					size++;
 				}
 			}
-			if(size==5){
+			if (size == 5) {
 				console.setText("Placer votre croiseur (4 cases)");
 			}
 		}
@@ -95,13 +93,14 @@ public class GameController {
 					&& battleship.getShip()[0][1].equals(Integer.toString(col))) {
 				inCol = true;
 				updateOneCell(battleship, row, col);
+				size++;
 			} else if ((battleship.getShip()[0][1].equals(Integer.toString(col + 1))
 					|| battleship.getShip()[0][1].equals(Integer.toString(col - 1)))
 					&& battleship.getShip()[0][0].equals(Integer.toString(row))) {
 				inRow = true;
 				updateOneCell(battleship, row, col);
+				size++;
 			}
-			size++;
 		} else if ((empty.equals(boardPlayer.getBoard()[row][col])) && size >= 7) {
 			if (inCol && !inRow) {
 				if (boardPlayer.adjacentBoxColumn(battleship, col, row)) {
@@ -114,13 +113,13 @@ public class GameController {
 					size++;
 				}
 			}
-			if (size==7){
+			if (size == 7) {
 				console.setText("Placer votre contre-torpilleurs (3 cases)");
 			}
 		}
 	}
 
-	public void cruiserPlacement(int col, int row,JTextArea console) {
+	public void cruiserPlacement(int col, int row, JTextArea console) {
 		if (empty.equals(boardPlayer.getBoard()[row][col]) && size == 9) {
 			updateOneCell(cruiser, row, col);
 			inRow = inCol = false;
@@ -131,13 +130,14 @@ public class GameController {
 					&& cruiser.getShip()[0][1].equals(Integer.toString(col))) {
 				inCol = true;
 				updateOneCell(cruiser, row, col);
+				size++;
 			} else if ((cruiser.getShip()[0][1].equals(Integer.toString(col + 1))
 					|| cruiser.getShip()[0][1].equals(Integer.toString(col - 1)))
 					&& cruiser.getShip()[0][0].equals(Integer.toString(row))) {
 				inRow = true;
 				updateOneCell(cruiser, row, col);
+				size++;
 			}
-			size++;
 		} else if ((empty.equals(boardPlayer.getBoard()[row][col])) && size >= 11) {
 			if (inCol && !inRow) {
 				if (boardPlayer.adjacentBoxColumn(cruiser, col, row)) {
@@ -150,13 +150,13 @@ public class GameController {
 					size++;
 				}
 			}
-			if (size==11){
+			if (size == 11) {
 				console.setText("Placer votre sous-marin (3 cases)");
 			}
 		}
 	}
 
-	public void submarinePlacement(int col, int row,JTextArea console) {
+	public void submarinePlacement(int col, int row, JTextArea console) {
 		if (empty.equals(boardPlayer.getBoard()[row][col]) && size == 12) {
 			updateOneCell(submarine, row, col);
 			inRow = inCol = false;
@@ -167,13 +167,14 @@ public class GameController {
 					&& submarine.getShip()[0][1].equals(Integer.toString(col))) {
 				inCol = true;
 				updateOneCell(submarine, row, col);
+				size++;
 			} else if ((submarine.getShip()[0][1].equals(Integer.toString(col + 1))
 					|| submarine.getShip()[0][1].equals(Integer.toString(col - 1)))
 					&& submarine.getShip()[0][0].equals(Integer.toString(row))) {
 				inRow = true;
 				updateOneCell(submarine, row, col);
+				size++;
 			}
-			size++;
 		} else if ((empty.equals(boardPlayer.getBoard()[row][col])) && size >= 14) {
 			if (inCol && !inRow) {
 				if (boardPlayer.adjacentBoxColumn(submarine, col, row)) {
@@ -186,7 +187,7 @@ public class GameController {
 					size++;
 				}
 			}
-			if(size==14){
+			if (size == 14) {
 				console.setText("Placer votre torpilleur (2 cases)");
 			}
 		}
@@ -203,14 +204,16 @@ public class GameController {
 					&& destroyer.getShip()[0][1].equals(Integer.toString(col))) {
 				inCol = true;
 				updateOneCell(destroyer, row, col);
+				console.setText("Vous avez placé tous vos bateaux!\n Cliquez sur connecter pour commencer.");
+				size++;
 			} else if ((destroyer.getShip()[0][1].equals(Integer.toString(col + 1))
 					|| destroyer.getShip()[0][1].equals(Integer.toString(col - 1)))
 					&& destroyer.getShip()[0][0].equals(Integer.toString(row))) {
 				inRow = true;
 				updateOneCell(destroyer, row, col);
+				console.setText("Vous avez placé tous vos bateaux!\n Cliquez sur connecter pour commencer.");
+				size++;
 			}
-			console.setText("Vous avez placé tous vos bateaux!\n Cliquez sur connecter pour commencer.");
-			size++;
 		}
 	}
 
