@@ -20,6 +20,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
+import client.Client;
 import controller.GameController;
 
 public class Draughtboard implements ActionListener {
@@ -34,6 +35,7 @@ public class Draughtboard implements ActionListener {
 	private JTextArea console;
 	private JPanel boardOpponent;
 	private JPanel boardPlayer;
+	private JButton btnCoButton;
 
 	public Draughtboard(GameController controller) {
 		this.controller = controller;
@@ -106,9 +108,10 @@ public class Draughtboard implements ActionListener {
 		panel.add(lblPseudo);
 
 		// Add a Button for the connection
-		JButton btnNewButton = new JButton("Connexion");
-		btnNewButton.setBounds(282, 66, 123, 38);
-		panel.add(btnNewButton);
+		btnCoButton = new JButton("Connexion");
+		btnCoButton.setBounds(282, 66, 123, 38);
+		btnCoButton.addActionListener(this);
+		panel.add(btnCoButton);
 
 		// Drawing of the left grid
 		boardPlayer = new JPanel();
@@ -168,7 +171,11 @@ public class Draughtboard implements ActionListener {
 				int posX =c.getX()/(boardPlayer.getWidth()/10);
 				int posY =c.getY()/(boardPlayer.getHeight()/10);
 				getController().shipsPlacement(console,posX,posY);
-			}
+			}		
+		}
+		
+		if(a.getSource()==btnCoButton && GameController.isGameSet()){
+			Client.connectServer();
 		}
 	}
 

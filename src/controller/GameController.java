@@ -17,6 +17,7 @@ public class GameController {
 	boolean inCol = false;
 	private int size = 0;
 	private String empty = "empty";
+	private static boolean isGameSet = false;
 
 	// Création des bateaux
 	private Ship carrier = new Ship(5);
@@ -213,7 +214,10 @@ public class GameController {
 				updateOneCell(destroyer, row, col);
 				console.setText("Vous avez placé tous vos bateaux!\n Cliquez sur connecter pour commencer.");
 				size++;
+				
 			}
+			isGameSet = true;
+			System.out.println(isGameSet);
 		}
 	}
 
@@ -249,4 +253,14 @@ public class GameController {
 	public void setDraughtBoard(Draughtboard draughtBoard) {
 		this.draughtBoard = draughtBoard;
 	}
+
+	public static boolean isGameSet() {
+		return isGameSet;
+	}
+
+	public void setGameSet(boolean isGameSet) {
+		this.isGameSet = isGameSet;
+	}
+	
+	
 }

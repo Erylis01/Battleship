@@ -14,7 +14,7 @@ public class Client {
 
 	private static final int PORT = 8051;
 
-	private static final String hostname = "159.31.249.152"; // adapter au
+	private static final String hostname = "159.31.249.22"; // adapter au
 																// serveur
 
 	public static void main(String[] args) {
@@ -22,7 +22,7 @@ public class Client {
 		GameController game = new GameController(boardPlayer);
 	}
 
-	public void connectServer() {
+	public static void connectServer() {
 		PrintWriter out = null;
 		BufferedReader networkIn = null;
 
