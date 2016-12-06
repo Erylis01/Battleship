@@ -58,12 +58,15 @@ public class ServiceThread extends Thread {
 		while (!mustStop && !interrupted) {
 			
 			String requeteclient = networkIn.readLine(); // bloquant
-			String[] requestToDo = requeteclient.split(";");
 			
+			
+			if(requeteclient != null) {
+				
+			String[] requestToDo = requeteclient.split(";");
 			if(requestToDo[0].equals("Ajout")){
 				output.println("okAjout");
 			}
-			
+			}
 /*			if (requeteclient == null) {
 				taskLog("Le client s'est déconnecté. Fin de la session");
 				break;
