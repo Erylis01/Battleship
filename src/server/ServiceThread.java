@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import controller.ThreadedServer;
+
 public class ServiceThread extends Thread {
 	int id;
 	Socket socketService;
@@ -17,9 +19,7 @@ public class ServiceThread extends Thread {
 	private Object lock;
 	private final static String TABS = "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t";
 	
-	private Integer currentGameNumber = 0;
-	private ArrayList<String> waitingRoom = new ArrayList<>();
-	private HashMap<String,Integer> currentGame = new HashMap<>();
+
 
 	public ServiceThread(int id, Socket _socketService,boolean mustStop,Object lock) {
 		this.id = id;
@@ -111,13 +111,13 @@ public class ServiceThread extends Thread {
 	}
 	
 	public void addPlayer(String s){
-		if(waitingRoom.size() == 1){
-			currentGame.put(waitingRoom.get(0), currentGameNumber);
-			currentGame.put(s, currentGameNumber);
-			waitingRoom.clear();
-			currentGameNumber += 1;
+		if(ThreadedServer.getWaitingRoom().size() == 1){
+			ThreadedServer.getCurrentGame().put(ThreadedServer.getWaitingRoom().get(0), ThreadedServer.getCurrentGameNumber());
+			ThreadedServer.getCurrentGame().put(s, ThreadedServer.getCurrentGameNumber());
+			ThreadedServer.getWaitingRoom().clear();
+			ThreadedServer.setCurrentGameNumber(ThreadedServer.getCurrentGameNumber() + 1);
 		} else {
-			waitingRoom.add(s);
+			ThreadedServer.getWaitingRoom().add(s);
 		}
 	}
 }

@@ -3,6 +3,7 @@ package controller;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import server.HostAddress;
@@ -15,7 +16,11 @@ public class ThreadedServer {
 	private boolean mustStop;
 	private Object lock = new Object();
 	private int taskCount;
-
+	
+	private static Integer currentGameNumber = 0;
+	private static ArrayList<String> waitingRoom = new ArrayList<>();
+	private static HashMap<String,Integer> currentGame = new HashMap<>();
+	
 	public void log(String mesg) {
 		synchronized (lock) {
 			System.out.println(mesg);
@@ -39,4 +44,29 @@ public class ThreadedServer {
 		log("Arrêt du serveur");
 	}
 
+	public static Integer getCurrentGameNumber() {
+		return currentGameNumber;
+	}
+
+	public static void setCurrentGameNumber(Integer currentGameNumber) {
+		currentGameNumber = currentGameNumber;
+	}
+
+	public static ArrayList<String> getWaitingRoom() {
+		return waitingRoom;
+	}
+
+	public void setWaitingRoom(ArrayList<String> waitingRoom) {
+		this.waitingRoom = waitingRoom;
+	}
+
+	public static HashMap<String, Integer> getCurrentGame() {
+		return currentGame;
+	}
+
+	public void setCurrentGame(HashMap<String, Integer> currentGame) {
+		this.currentGame = currentGame;
+	}
+
+	
 }
