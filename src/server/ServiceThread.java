@@ -127,6 +127,7 @@ public class ServiceThread extends Thread {
 		opponentServiceThread = ThreadedServer.getWaitingRoom().get(0);
 		opponentServiceThread.setOpponentServiceThread(this);
 		pseudo = s;
+		ThreadedServer.getWaitingRoom().clear();
 		} else {
 			ThreadedServer.getWaitingRoom().add(this);
 			pseudo = s;
