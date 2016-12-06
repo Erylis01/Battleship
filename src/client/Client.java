@@ -20,6 +20,7 @@ public class Client {
 
 	private static int port = 8051;
 	private static boolean partnerAwait = false;
+	private static boolean opponentFind = false;
 	private static String hostname = null; // adapter au
 																// serveur
 
@@ -59,9 +60,19 @@ public class Client {
 				Thread.sleep(10);
 				
 				if(networkIn.readLine().equals("okAjout")){
-				console.setText("Vous étes maintenant connecté !");
+				console.setText("Vous étes connecté en attente d'un autre joueur !");
 				partnerAwait = true;
 				}
+			}
+			fenetre.requestFocus();
+			fenetre.revalidate();
+			fenetre.repaint();
+			
+			while(!opponentFind){
+				if(networkIn.readLine().equals("okAdversaire")){
+					console.setText("Nous avons trouver votre adversaire, la partie va commencer !");
+					opponentFind = true;
+					}
 			}
 			fenetre.requestFocus();
 			fenetre.revalidate();
