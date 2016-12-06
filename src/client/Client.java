@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -27,7 +28,7 @@ public class Client {
 		GameController game = new GameController(boardPlayer);
 	}
 
-	public static void connectServer(JTextArea console, JTextField fieldPseudo,JTextField fieldIP, JTextField fieldPort) {
+	public static void connectServer(JFrame fenetre, JTextArea console, JTextField fieldPseudo,JTextField fieldIP, JTextField fieldPort) {
 		PrintWriter out = null;
 		BufferedReader networkIn = null;
 		hostname = fieldIP.getText();
@@ -58,13 +59,13 @@ public class Client {
 				Thread.sleep(10);
 				
 				if(networkIn.readLine().equals("okAjout")){
-				console.setText("\n"+networkIn.readLine());
+				console.setText("Vous étes maintenant connecté !");
 				partnerAwait = true;
 				}
-
 			}
-			console.getParent().revalidate();
-			console.getParent().repaint();
+			fenetre.requestFocus();
+			fenetre.revalidate();
+			fenetre.repaint();
 			
 		} catch (IOException e) {
 			System.err.println(e);

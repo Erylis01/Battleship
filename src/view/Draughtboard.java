@@ -179,7 +179,7 @@ public class Draughtboard implements ActionListener {
 		}
 		
 		if(a.getSource()==btnCoButton && GameController.isGameSet()){
-			Client.connectServer(console,fieldPseudo,fieldIP,fieldPort);
+			Client.connectServer(frame,console,fieldPseudo,fieldIP,fieldPort);
 		}
 	}
 
