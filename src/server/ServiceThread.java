@@ -17,6 +17,8 @@ public class ServiceThread extends Thread {
 	private Object lock;
 	private final static String TABS = "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t";
 	
+	private Integer currentGameNumber = 0;
+	private ArrayList<String> waitingRoom = new ArrayList<>();
 	private HashMap<String,Integer> currentGame = new HashMap<>();
 
 	public ServiceThread(int id, Socket _socketService,boolean mustStop,Object lock) {
@@ -54,12 +56,12 @@ public class ServiceThread extends Thread {
 		
 		
 		while (!mustStop && !interrupted) {
+			
 			String requeteclient = networkIn.readLine(); // bloquant
 			String[] requestToDo = requeteclient.split(";");
 			
 			if(requestToDo[0].equals("Ajout")){
-				addPlayer(requestToDo[1]);
-				output.println("Vous étes connecté au serveur, nous allons vous mettre en relation avec un adversaire");
+				output.println("okAjout");
 			}
 			
 /*			if (requeteclient == null) {
@@ -109,9 +111,13 @@ public class ServiceThread extends Thread {
 	}
 	
 	public void addPlayer(String s){
-		if(!currentGame.containsKey(s)){
-			Integer game = new Integer(Math.abs(currentGame.size())+1);
-			currentGame.put(s, game);
+		if(waitingRoom.size() == 1){
+			currentGame.put(waitingRoom.get(0), currentGameNumber);
+			currentGame.put(s, currentGameNumber);
+			waitingRoom.clear();
+			currentGameNumber += 1;
+		} else {
+			waitingRoom.add(s);
 		}
 	}
 }

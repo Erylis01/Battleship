@@ -3,6 +3,7 @@ package client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -17,7 +18,7 @@ import view.Draughtboard;
 public class Client {
 
 	private static int port = 8051;
-
+	private static boolean partnerAwait = false;
 	private static String hostname = null; // adapter au
 																// serveur
 
@@ -46,22 +47,25 @@ public class Client {
 			BufferedReader userIn = new BufferedReader(new InputStreamReader(System.in));
 
 			out = new PrintWriter(theSocket.getOutputStream());
-
-			console.setText("Connecté avec le serveur !");
-
-			while (true) {
-				
-																									// aussi
+			
+			while (!partnerAwait) {
 																									// [fin]
 				String theLine = "Ajout;"+fieldPseudo.getText();
 				if (theLine.equals("."))
 					break;
 				out.println(theLine);
 				out.flush();
-				Thread.sleep(100);
+				Thread.sleep(10);
+				
+				if(networkIn.readLine().equals("okAjout")){
+				console.setText("\n"+networkIn.readLine());
+				partnerAwait = true;
+				}
 
-				fieldPseudo.setText("\n"+networkIn.readLine());
 			}
+			console.getParent().revalidate();
+			console.getParent().repaint();
+			
 		} catch (IOException e) {
 			System.err.println(e);
 			System.out.println("plus de connexion");
