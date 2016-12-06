@@ -60,7 +60,6 @@ public class Client {
 				Thread.sleep(10);
 				
 				if(networkIn.readLine().equals("okAjout")){
-				console.setText("Vous étes connecté en attente d'un autre joueur !");
 				partnerAwait = true;
 				}
 			}
@@ -69,10 +68,21 @@ public class Client {
 			fenetre.repaint();
 			
 			while(!opponentFind){
-				if(networkIn.readLine().equals("okAdversaire")){
-					console.setText("Nous avons trouver votre adversaire, la partie va commencer !");
-					opponentFind = true;
-					}
+				
+				String theLine = "Adversaire;"+fieldPseudo.getText();
+				if (theLine.equals("."))
+					break;
+				out.println(theLine);
+				out.flush();
+				Thread.sleep(10);
+				
+				String answer = networkIn.readLine();
+				if(!answer.equals("no")){
+				String[] response = answer.split(";");
+				console.setText("Votre adversaire sera "+response[1]);
+				opponentFind = true;
+				}
+				
 			}
 			fenetre.requestFocus();
 			fenetre.revalidate();

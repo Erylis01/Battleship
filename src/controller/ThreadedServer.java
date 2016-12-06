@@ -17,9 +17,7 @@ public class ThreadedServer {
 	private Object lock = new Object();
 	private int taskCount;
 	
-	private static Integer currentGameNumber = 0;
-	private static ArrayList<String> waitingRoom = new ArrayList<>();
-	private static HashMap<String,Integer> currentGame = new HashMap<>();
+	private static ArrayList<ServiceThread> waitingRoom = new ArrayList<>();
 	
 	public void log(String mesg) {
 		synchronized (lock) {
@@ -44,29 +42,18 @@ public class ThreadedServer {
 		log("Arrêt du serveur");
 	}
 
-	public static Integer getCurrentGameNumber() {
-		return currentGameNumber;
+
+	public static void setWaitingRoom(ArrayList<ServiceThread> waitingRoom) {
+		ThreadedServer.waitingRoom = waitingRoom;
 	}
 
-	public static void setCurrentGameNumber(Integer currentGameNumber) {
-		currentGameNumber = currentGameNumber;
-	}
-
-	public static ArrayList<String> getWaitingRoom() {
+	public static ArrayList<ServiceThread> getWaitingRoom() {
 		return waitingRoom;
 	}
 
-	public void setWaitingRoom(ArrayList<String> waitingRoom) {
-		this.waitingRoom = waitingRoom;
-	}
 
-	public static HashMap<String, Integer> getCurrentGame() {
-		return currentGame;
-	}
 
-	public void setCurrentGame(HashMap<String, Integer> currentGame) {
-		this.currentGame = currentGame;
 	}
 
 	
-}
+

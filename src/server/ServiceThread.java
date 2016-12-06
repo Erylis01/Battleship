@@ -18,8 +18,9 @@ public class ServiceThread extends Thread {
 	private boolean mustStop;
 	private Object lock;
 	private final static String TABS = "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t";
-	
-
+	public ServiceThread opponentServiceThread;
+	public boolean isItYourTurn;
+	private String pseudo;
 
 	public ServiceThread(int id, Socket _socketService,boolean mustStop,Object lock) {
 		this.id = id;
@@ -65,6 +66,14 @@ public class ServiceThread extends Thread {
 			String[] requestToDo = requeteclient.split(";");
 			if(requestToDo[0].equals("Ajout")){
 				output.println("okAjout");
+				addPlayer(requestToDo[1]);
+			}
+			if(requestToDo[0].equals("Adversaire")){
+				if(opponentServiceThread != null) {
+				output.println("okAdversaire;"+opponentServiceThread.getPseudo());
+				} else {
+				output.println("no");
+				}
 			}
 			}
 /*			if (requeteclient == null) {
@@ -115,12 +124,38 @@ public class ServiceThread extends Thread {
 	
 	public void addPlayer(String s){
 		if(ThreadedServer.getWaitingRoom().size() == 1){
-			ThreadedServer.getCurrentGame().put(ThreadedServer.getWaitingRoom().get(0), ThreadedServer.getCurrentGameNumber());
-			ThreadedServer.getCurrentGame().put(s, ThreadedServer.getCurrentGameNumber());
-			ThreadedServer.getWaitingRoom().clear();
-			ThreadedServer.setCurrentGameNumber(ThreadedServer.getCurrentGameNumber() + 1);
+		opponentServiceThread = ThreadedServer.getWaitingRoom().get(0);
+		opponentServiceThread.setOpponentServiceThread(this);
+		pseudo = s;
 		} else {
-			ThreadedServer.getWaitingRoom().add(s);
+			ThreadedServer.getWaitingRoom().add(this);
+			pseudo = s;
 		}
 	}
+
+
+
+	public ServiceThread getOpponentServiceThread() {
+		return opponentServiceThread;
+	}
+
+
+
+	public void setOpponentServiceThread(ServiceThread opponentServiceThread) {
+		this.opponentServiceThread = opponentServiceThread;
+	}
+
+
+
+	public String getPseudo() {
+		return pseudo;
+	}
+
+
+
+	public void setPseudo(String pseudo) {
+		this.pseudo = pseudo;
+	}
+	
+	
 }
