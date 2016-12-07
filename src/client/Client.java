@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 
 import controller.GameController;
 import model.BoardPlayer;
+import server.ServiceThread;
 import view.Draughtboard;
 
 public class Client {
@@ -27,6 +28,9 @@ public class Client {
 	private static Socket theSocket = new Socket();															// serveur
 	private static boolean isItYourTurn;
 	private static boolean isDead = false;
+	private static Object lock = new Object();
+	static PrintWriter out = null;
+	static BufferedReader networkIn = null;
 	
 	public static void main(String[] args) {
 		BoardPlayer boardPlayer = new BoardPlayer();
@@ -34,8 +38,7 @@ public class Client {
 	}
 
 	public static void connectServer(JFrame fenetre, JTextArea console, JTextField fieldPseudo,JTextField fieldIP, JTextField fieldPort) {
-		PrintWriter out = null;
-		BufferedReader networkIn = null;
+
 		hostname = fieldIP.getText();
 		port = Integer.parseInt(fieldPort.getText());
 		
@@ -106,25 +109,8 @@ public class Client {
 			fenetre.revalidate();
 			fenetre.repaint();
 			
-			/*while(!isDead){
-				Thread.sleep(400);
-				fenetre.requestFocus();
-				fenetre.revalidate();
-				fenetre.repaint();
-				if(isItYourTurn){
-					break;
-				} else {
-					String answer = networkIn.readLine();
-					if(answer != null ){
-					String[] answerSplit = answer.split(";");
-					if(answerSplit[0].equals("Hit")){
-					console.setText("Votre adversaire a tapé en  "+answerSplit[1]+" "+answerSplit[2]);
-					out.println("Touched");
-					isItYourTurn = true;
-					}
-					}
-				}
-			}*/
+			new clientThread(1,fenetre,console, theSocket,false,lock).start();
+
 			
 		} catch (IOException e) {
 			System.err.println(e);
@@ -133,13 +119,13 @@ public class Client {
 			System.err.println(e);
 			System.out.println("plus de connexion");
 		} finally {
-			try {
-				if (networkIn != null)
-					networkIn.close();
-				if (out != null)
-					out.close();
-			} catch (IOException ex) {
-			}
+//			try {
+//				//if (networkIn != null)
+//					//networkIn.close();
+//				//if (out != null)
+//					//out.close();
+//			} catch (IOException ex) {
+//			}
 		}
 	}
 
@@ -194,14 +180,10 @@ public class Client {
 	}
 
 	public static void sendHit(JButton b,JFrame frame, JTextArea console, int posX, int posY) throws InterruptedException {	
-		PrintWriter out = null;
-		BufferedReader networkIn = null;
+
 		
 		try {
-			networkIn = new BufferedReader(new InputStreamReader(theSocket.getInputStream()));
-			BufferedReader userIn = new BufferedReader(new InputStreamReader(System.in));
-			out = new PrintWriter(theSocket.getOutputStream());
-			
+
 			out.println("Hit;"+posX+";"+posY);
 			out.flush();
 			Thread.sleep(10);
@@ -236,6 +218,38 @@ public class Client {
 
 	public static void setDead(boolean isDead) {
 		Client.isDead = isDead;
+	}
+
+	public static void setPort(int port) {
+		Client.port = port;
+	}
+
+	public static void setHostname(String hostname) {
+		Client.hostname = hostname;
+	}
+
+	public static Socket getTheSocket() {
+		return theSocket;
+	}
+
+	public static void setTheSocket(Socket theSocket) {
+		Client.theSocket = theSocket;
+	}
+
+	public static PrintWriter getOut() {
+		return out;
+	}
+
+	public static void setOut(PrintWriter out) {
+		Client.out = out;
+	}
+
+	public static BufferedReader getNetworkIn() {
+		return networkIn;
+	}
+
+	public static void setNetworkIn(BufferedReader networkIn) {
+		Client.networkIn = networkIn;
 	}
 	
 	

@@ -82,12 +82,13 @@ public class ServiceThread extends Thread {
 			}
 			
 			
-				if(isItYourTurn){
+			if(isItYourTurn){
 					if(requestToDo[0].equals("Hit")){
+						taskLog("Le hit est recu niveau serveur");
 						opponentServiceThread.getOutput().println("Hit;"+requestToDo[1]+";"+requestToDo[2]);
 						isItYourTurn = false;
 						opponentServiceThread.setItYourTurn(true);
-					}
+			}
 			
 			}
 			}

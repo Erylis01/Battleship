@@ -145,6 +145,7 @@ public class Draughtboard implements ActionListener {
 				b.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				b.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				b.setPreferredSize(new java.awt.Dimension(34, 34));
+				b.addActionListener(this);
 				boardOpponent.add(b);
 			}
 		}
@@ -188,6 +189,8 @@ public class Draughtboard implements ActionListener {
 			int posY =c.getY()/(boardOpponent.getHeight()/10);
 			try {
 				Client.sendHit((JButton) c,frame,console,posX,posY);
+				Client.setItYourTurn(false);
+				console.setText("\nEnvoi du coup ...");
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
