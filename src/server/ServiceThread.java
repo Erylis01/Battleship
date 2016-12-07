@@ -21,6 +21,8 @@ public class ServiceThread extends Thread {
 	public ServiceThread opponentServiceThread;
 	public boolean isItYourTurn;
 	private String pseudo;
+	private boolean isDead = false;
+	private PrintStream output;
 
 	public ServiceThread(int id, Socket _socketService,boolean mustStop,Object lock) {
 		this.id = id;
@@ -50,7 +52,7 @@ public class ServiceThread extends Thread {
 
 	private void traiteClient(Socket socketService) throws IOException {
 		taskLog("le client " + socketService.getRemoteSocketAddress() + " s'est connecté");
-		PrintStream output;		
+				
 		output = new PrintStream(socketService.getOutputStream(), true);// autoflush
 		BufferedReader networkIn = new BufferedReader(new InputStreamReader(socketService.getInputStream()));
 		
@@ -65,8 +67,8 @@ public class ServiceThread extends Thread {
 				
 			String[] requestToDo = requeteclient.split(";");
 			if(requestToDo[0].equals("Ajout")){
-				output.println("okAjout");
 				addPlayer(requestToDo[1]);
+				output.println("okAjout;"+isItYourTurn);				
 			}
 			if(requestToDo[0].equals("Adversaire")){
 				if(opponentServiceThread != null) {
@@ -74,6 +76,19 @@ public class ServiceThread extends Thread {
 				} else {
 				output.println("no");
 				}
+			}
+			if(requestToDo[0].equals("Touched")){
+				opponentServiceThread.getOutput().println("Touched");
+			}
+			
+			
+				if(isItYourTurn){
+					if(requestToDo[0].equals("Hit")){
+						opponentServiceThread.getOutput().println("Hit;"+requestToDo[1]+";"+requestToDo[2]);
+						isItYourTurn = false;
+						opponentServiceThread.setItYourTurn(true);
+					}
+			
 			}
 			}
 /*			if (requeteclient == null) {
@@ -128,9 +143,11 @@ public class ServiceThread extends Thread {
 		opponentServiceThread.setOpponentServiceThread(this);
 		pseudo = s;
 		ThreadedServer.getWaitingRoom().clear();
+		isItYourTurn = false;
 		} else {
 			ThreadedServer.getWaitingRoom().add(this);
 			pseudo = s;
+			isItYourTurn = true;
 		}
 	}
 
@@ -156,6 +173,30 @@ public class ServiceThread extends Thread {
 
 	public void setPseudo(String pseudo) {
 		this.pseudo = pseudo;
+	}
+
+
+
+	public boolean isItYourTurn() {
+		return isItYourTurn;
+	}
+
+
+
+	public void setItYourTurn(boolean isItYourTurn) {
+		this.isItYourTurn = isItYourTurn;
+	}
+
+
+
+	public PrintStream getOutput() {
+		return output;
+	}
+
+
+
+	public void setOutput(PrintStream output) {
+		this.output = output;
 	}
 	
 	

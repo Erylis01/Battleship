@@ -181,6 +181,19 @@ public class Draughtboard implements ActionListener {
 		if(a.getSource()==btnCoButton && GameController.isGameSet()){
 			Client.connectServer(frame,console,fieldPseudo,fieldIP,fieldPort);
 		}
+		
+		for(Component c : boardOpponent.getComponents()){
+		if(a.getSource()==c && Client.isOpponentFind() && Client.isItYourTurn()){
+			int posX =c.getX()/(boardOpponent.getWidth()/10);
+			int posY =c.getY()/(boardOpponent.getHeight()/10);
+			try {
+				Client.sendHit((JButton) c,frame,console,posX,posY);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		}
 	}
 
 	public GameController getController() {
