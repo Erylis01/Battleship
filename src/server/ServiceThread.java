@@ -78,18 +78,14 @@ public class ServiceThread extends Thread {
 				}
 			}
 			if(requestToDo[0].equals("Touched")){
-				opponentServiceThread.getOutput().println("Touched");
+				taskLog("Le touched est recu niveau serveur");
+				opponentServiceThread.getOutput().println("Touched;lol");
+				isItYourTurn = true;
 			}
-			
-			
-			if(isItYourTurn){
-					if(requestToDo[0].equals("Hit")){
+			if(requestToDo[0].equals("Hit")){
 						taskLog("Le hit est recu niveau serveur");
 						opponentServiceThread.getOutput().println("Hit;"+requestToDo[1]+";"+requestToDo[2]);
-						isItYourTurn = false;
-						opponentServiceThread.setItYourTurn(true);
-			}
-			
+						isItYourTurn = false;		
 			}
 			}
 /*			if (requeteclient == null) {

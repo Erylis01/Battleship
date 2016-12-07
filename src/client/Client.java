@@ -180,28 +180,9 @@ public class Client {
 	}
 
 	public static void sendHit(JButton b,JFrame frame, JTextArea console, int posX, int posY) throws InterruptedException {	
-
-		
-		try {
-
 			out.println("Hit;"+posX+";"+posY);
 			out.flush();
-			Thread.sleep(10);
-			
-			String answer = networkIn.readLine();
-			if(!answer.equals("Touched")){
-			b.setBackground(Color.RED);
-			console.setText("Touché !");
-			} else {
-			b.setBackground(Color.BLUE);
-			console.setText("Raté !");	
-			}
-			
-		isItYourTurn = false;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}	
-		
+			isItYourTurn = false;
 	}
 
 	public static boolean isItYourTurn() {

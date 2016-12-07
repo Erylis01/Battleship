@@ -1,5 +1,6 @@
 package client;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,6 +14,7 @@ import javax.swing.JTextArea;
 
 import controller.ThreadedServer;
 import server.ServiceThread;
+import view.Draughtboard;
 
 public class clientThread extends Thread{
 	int id;
@@ -68,16 +70,26 @@ public class clientThread extends Thread{
 			
 			if(requeteclient != null) {
 				
-				if(!Client.isItYourTurn()){
 					String[] requeteclientsplit = requeteclient.split(";");
+					
 					if(requeteclientsplit[0].equals("Hit")){
-					console.setText("Votre adversaire a tapé en  "+requeteclientsplit[1]+" "+requeteclientsplit[2]);
-					out.println("Touched");
+					out.println("Touched;lol");
+					out.flush();
 					taskLog("LE THREAD A BIEN RECUPERE LE HIT");
 					Client.setItYourTurn(true);
-					
+					console.setText("Impact en "+requeteclientsplit[1]+requeteclientsplit[2]+ "! A vous de jouer");
 					}
-				}
+					
+					if(requeteclientsplit[0].equals("Touched")){
+						//b.setBackground(Color.RED);
+						taskLog("LE THREAD A BIEN RECUPERE LA REPONSE");
+						console.setText("Touché ! Au tour adverse");
+						fenetre.requestFocus();
+						fenetre.revalidate();
+						fenetre.repaint();
+					}
+					
+				
 			}
 /*			if (requeteclient == null) {
 				taskLog("Le client s'est déconnecté. Fin de la session");

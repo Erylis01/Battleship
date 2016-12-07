@@ -32,7 +32,7 @@ public class Draughtboard implements ActionListener {
 	private JTextField fieldPort;
 	private JPanel panel;
 	private JTextField fieldPseudo;
-	private JTextArea console;
+	private static JTextArea console;
 	private JPanel boardOpponent;
 	private JPanel boardPlayer;
 	private JButton btnCoButton;
@@ -189,8 +189,6 @@ public class Draughtboard implements ActionListener {
 			int posY =c.getY()/(boardOpponent.getHeight()/10);
 			try {
 				Client.sendHit((JButton) c,frame,console,posX,posY);
-				Client.setItYourTurn(false);
-				console.setText("\nEnvoi du coup ...");
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -223,7 +221,7 @@ public class Draughtboard implements ActionListener {
 		this.boardPlayer = boardPlayer;
 	}
 
-	public JTextArea getConsole() {
+	public static JTextArea getConsole() {
 		return console;
 	}
 
