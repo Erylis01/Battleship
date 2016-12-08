@@ -21,7 +21,6 @@ public class ServiceThread extends Thread {
 	public ServiceThread opponentServiceThread;
 	public boolean isItYourTurn;
 	private String pseudo;
-	private boolean isDead = false;
 	private PrintStream output;
 
 	public ServiceThread(int id, Socket _socketService,boolean mustStop,Object lock) {
@@ -92,6 +91,11 @@ public class ServiceThread extends Thread {
 						taskLog("Le hit est recu niveau serveur");
 						opponentServiceThread.getOutput().println("Hit;"+requestToDo[1]+";"+requestToDo[2]);
 						isItYourTurn = false;		
+			}
+			if(requestToDo[0].equals("Win")){
+				taskLog("Le Win est recu niveau serveur");
+				opponentServiceThread.getOutput().println("Win;");
+				isItYourTurn = false;		
 			}
 			}
 /*			if (requeteclient == null) {

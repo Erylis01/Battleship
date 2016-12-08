@@ -19,6 +19,7 @@ public class GameController {
 	private int size = 0;
 	private String empty = "empty";
 	private static boolean isGameSet = false;
+	private boolean allShipDead =false;
 
 	// Création des bateaux
 	private Ship[] listShip = new Ship[5];
@@ -283,6 +284,19 @@ public class GameController {
 	public void updatePlayerMissedCell(String col, String row){
 		Component c = draughtBoard.getBoardOpponent().getComponentAt(Integer.parseInt(col) * 34, Integer.parseInt(row) * 34);
 		c.setBackground(Color.GREEN);
+	}
+	
+	public boolean checkAllShipDeath(){
+		int nbShipDead = 0;
+		for (Ship s : listShip){
+			if (s.checkDeath()){
+				nbShipDead++;
+			}
+		}
+		if(nbShipDead==listShip.length){
+			allShipDead =true;
+		}
+		return allShipDead;
 	}
 	
 	public BoardPlayer getBoardPlayer() {

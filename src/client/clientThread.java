@@ -91,9 +91,20 @@ public class clientThread extends Thread{
 					
 					if(requeteclientsplit[0].equals("Touched")){
 						game.updatePlayerTouchedCell(requeteclientsplit[1], requeteclientsplit[2]);
-						taskLog("LE THREAD A BIEN RECUPERE LA REPONSE");
-						game.displayInConsole("Touché ! Au tour adverse");
-						game.activeFrame();
+						if(game.checkAllShipDeath()){
+							taskLog("LE THREAD A BIEN RECUPERE LA REPONSE");
+							game.displayInConsole("Vous avez perdu!! Vous êtes vraiment trop mauvais...");
+							out.println("Win;");
+							out.flush();
+							isDead =true;
+							//game.activeFrame();
+						}else{
+							
+							taskLog("LE THREAD A BIEN RECUPERE LA REPONSE");
+							game.displayInConsole("Touché ! Au tour adverse");
+							game.activeFrame();
+						}
+						
 					}
 					if(requeteclientsplit[0].equals("Missed")){
 						game.updatePlayerMissedCell(requeteclientsplit[1], requeteclientsplit[2]);
@@ -101,7 +112,11 @@ public class clientThread extends Thread{
 						game.displayInConsole("Loupé ! Au tour adverse");
 						game.activeFrame();
 					}
-				
+					if(requeteclientsplit[0].equals("Win")){
+						taskLog("LE THREAD A BIEN RECUPERE LA REPONSE");
+						game.displayInConsole("Vous avez gagné!!!!");
+						isDead =true;
+					}
 			}
 /*			if (requeteclient == null) {
 				taskLog("Le client s'est déconnecté. Fin de la session");

@@ -7,6 +7,7 @@ public class Ship {
 
 	private String[][] shipTable;
 	private int size;
+	private boolean isDead = false;
 
 	public Ship(int size) {
 		this.shipTable = new String[size][3];
@@ -24,6 +25,7 @@ public class Ship {
 		this.shipTable[box][1] = col;
 		this.shipTable[box][2] = state;
 	}
+
 	public int getMinRow() {
 		int minRow = Integer.parseInt(this.shipTable[0][0]);
 		for (int i = 0; i < this.size; i++) {
@@ -58,12 +60,25 @@ public class Ship {
 		int maxCol = Integer.parseInt(this.shipTable[0][1]);
 		for (int i = 0; i < this.size; i++) {
 			if (shipTable[i][0] != null && maxCol < Integer.parseInt(shipTable[i][1])) {
-					maxCol = Integer.parseInt(this.shipTable[i][1]);
+				maxCol = Integer.parseInt(this.shipTable[i][1]);
 			}
 		}
 		return maxCol;
 	}
-	
+
+	public boolean checkDeath() {
+		int nbHit = 0;
+		for (int i = 0; i < shipTable.length; i++) {
+			if ("death".equals(shipTable[i][2])) {
+				nbHit++;
+			}
+		}
+		if (nbHit == size) {
+			isDead = true;
+		}
+		return isDead;
+	}
+
 	public String[][] getShip() {
 		return shipTable;
 	}
@@ -76,9 +91,9 @@ public class Ship {
 		Logger log = Logger.getLogger(Ship.class.getName());
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < shipTable[i].length; j++) {
-				log.log(Level.INFO, shipTable[i][j]+" ");
+				log.log(Level.INFO, shipTable[i][j] + " ");
 			}
-			log.log(Level.INFO," ");
+			log.log(Level.INFO, " ");
 		}
 	}
 }
