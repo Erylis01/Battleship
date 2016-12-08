@@ -19,6 +19,11 @@ public class Ship {
 		this.shipTable[box][2] = state;
 	}
 
+	public void updateShip(int box, String row, String col, String state) {
+		this.shipTable[box][0] = row;
+		this.shipTable[box][1] = col;
+		this.shipTable[box][2] = state;
+	}
 	public int getMinRow() {
 		int minRow = Integer.parseInt(this.shipTable[0][0]);
 		for (int i = 0; i < this.size; i++) {
@@ -58,7 +63,7 @@ public class Ship {
 		}
 		return maxCol;
 	}
-
+	
 	public String[][] getShip() {
 		return shipTable;
 	}

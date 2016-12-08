@@ -1,6 +1,7 @@
 package client;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,6 +13,7 @@ import java.net.Socket;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
+import controller.GameController;
 import controller.ThreadedServer;
 import server.ServiceThread;
 import view.Draughtboard;
@@ -24,15 +26,13 @@ public class clientThread extends Thread{
 	private final static String TABS = "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t";
 	private boolean isDead = false;
 	private PrintStream output;
-	private JFrame fenetre;
-	private JTextArea console;
+	private GameController game;
 
-	public clientThread(int id, JFrame fenetre, JTextArea console,Socket socketService,boolean mustStop,Object lock) {
+	public clientThread(int id,GameController gc,Socket socketService,boolean mustStop,Object lock) {
 		this.id = id;
 		this.mustStop=mustStop;
 		this.lock=lock;
-		this.fenetre = fenetre;
-		this.console = console;
+		this.game=gc;
 	}
 
 	
@@ -73,22 +73,34 @@ public class clientThread extends Thread{
 					String[] requeteclientsplit = requeteclient.split(";");
 					
 					if(requeteclientsplit[0].equals("Hit")){
-					out.println("Touched;lol");
-					out.flush();
 					taskLog("LE THREAD A BIEN RECUPERE LE HIT");
+					boolean touched =game.checkIfTouch(requeteclientsplit[1], requeteclientsplit[2]);
+					if (touched){
+						out.println("Touched;"+requeteclientsplit[1]+";"+requeteclientsplit[2]);
+						out.flush();
+						game.updateOpponentTouchedCell(requeteclientsplit[1], requeteclientsplit[2]);
+					}else{
+						out.println("Missed;"+requeteclientsplit[1]+";"+requeteclientsplit[2]);
+						out.flush();
+						game.updateOpponentMissedCell(requeteclientsplit[1], requeteclientsplit[2]);
+					}
 					Client.setItYourTurn(true);
-					console.setText("Impact en "+requeteclientsplit[1]+requeteclientsplit[2]+ "! A vous de jouer");
+					String strAsciiTab = Character.toString((char) (Integer.parseInt(requeteclientsplit[1])+65));
+					game.displayInConsole("Impact en "+strAsciiTab+requeteclientsplit[2]+ "! A vous de jouer");
 					}
 					
 					if(requeteclientsplit[0].equals("Touched")){
-						//b.setBackground(Color.RED);
+						game.updatePlayerTouchedCell(requeteclientsplit[1], requeteclientsplit[2]);
 						taskLog("LE THREAD A BIEN RECUPERE LA REPONSE");
-						console.setText("Touché ! Au tour adverse");
-						fenetre.requestFocus();
-						fenetre.revalidate();
-						fenetre.repaint();
+						game.displayInConsole("Touché ! Au tour adverse");
+						game.activeFrame();
 					}
-					
+					if(requeteclientsplit[0].equals("Missed")){
+						game.updatePlayerMissedCell(requeteclientsplit[1], requeteclientsplit[2]);
+						taskLog("LE THREAD A BIEN RECUPERE LA REPONSE");
+						game.displayInConsole("Loupé ! Au tour adverse");
+						game.activeFrame();
+					}
 				
 			}
 /*			if (requeteclient == null) {

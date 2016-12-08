@@ -37,12 +37,12 @@ public class Client {
 		GameController game = new GameController(boardPlayer);
 	}
 
-	public static void connectServer(JFrame fenetre, JTextArea console, JTextField fieldPseudo,JTextField fieldIP, JTextField fieldPort) {
+	public static void connectServer(GameController game) {
 
-		hostname = fieldIP.getText();
-		port = Integer.parseInt(fieldPort.getText());
+		hostname = game.getIp();
+		port = Integer.parseInt(game.getPort());
 		
-		console.setText("Connexion et recherche d'un adversaire ...");
+		game.displayInConsole("Connexion et recherche d'un adversaire ...");
 		System.out.println("(démarrage du client) veuillez patienter...");
 		System.out.println("(le serveur est) " + hostname + ":" + port);
 		try {
@@ -60,7 +60,7 @@ public class Client {
 			
 			while (!partnerAwait) {
 																									// [fin]
-				String theLine = "Ajout;"+fieldPseudo.getText();
+				String theLine = "Ajout;"+game.getDraughtBoard().getFieldPseudo().getText();
 				if (theLine.equals("."))
 					break;
 				out.println(theLine);
@@ -79,13 +79,11 @@ public class Client {
 				}
 				}
 			}
-			fenetre.requestFocus();
-			fenetre.revalidate();
-			fenetre.repaint();
+			game.activeFrame();
 			
 			while(!opponentFind){
 				
-				String theLine = "Adversaire;"+fieldPseudo.getText();
+				String theLine = "Adversaire;"+game.getPseudo();
 				if (theLine.equals("."))
 					break;
 				out.println(theLine);
@@ -95,21 +93,19 @@ public class Client {
 				String answer = networkIn.readLine();
 				if(!answer.equals("no")){
 				String[] response = answer.split(";");
-				console.setText("Votre adversaire sera "+response[1]);
+				game.displayInConsole("Votre adversaire sera "+response[1]);
 				if(isItYourTurn){
-					console.setText(console.getText()+"\n C'est votre tour");	
+					game.displayInConsole(game.getDisplayedinConsole()+"\n C'est votre tour");	
 				} else {
-					console.setText(console.getText()+"\n C'est le tour de votre adversaire");	
+					game.displayInConsole(game.getDisplayedinConsole()+"\n C'est le tour de votre adversaire");	
 				}
 				opponentFind = true;
 				}
 				
 			}
-			fenetre.requestFocus();
-			fenetre.revalidate();
-			fenetre.repaint();
+			game.activeFrame();
 			
-			new clientThread(1,fenetre,console, theSocket,false,lock).start();
+			new clientThread(1,game, theSocket,false,lock).start();
 
 			
 		} catch (IOException e) {

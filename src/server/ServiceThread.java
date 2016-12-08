@@ -79,9 +79,15 @@ public class ServiceThread extends Thread {
 			}
 			if(requestToDo[0].equals("Touched")){
 				taskLog("Le touched est recu niveau serveur");
-				opponentServiceThread.getOutput().println("Touched;lol");
+				opponentServiceThread.getOutput().println("Touched;"+requestToDo[1]+";"+requestToDo[2]);
 				isItYourTurn = true;
 			}
+			if(requestToDo[0].equals("Missed")){
+				taskLog("Le Missed est recu niveau serveur");
+				opponentServiceThread.getOutput().println("Missed;"+requestToDo[1]+";"+requestToDo[2]);
+				isItYourTurn = true;
+			}
+			
 			if(requestToDo[0].equals("Hit")){
 						taskLog("Le hit est recu niveau serveur");
 						opponentServiceThread.getOutput().println("Hit;"+requestToDo[1]+";"+requestToDo[2]);

@@ -32,7 +32,7 @@ public class Draughtboard implements ActionListener {
 	private JTextField fieldPort;
 	private JPanel panel;
 	private JTextField fieldPseudo;
-	private static JTextArea console;
+	private JTextArea console;
 	private JPanel boardOpponent;
 	private JPanel boardPlayer;
 	private JButton btnCoButton;
@@ -180,7 +180,7 @@ public class Draughtboard implements ActionListener {
 		}
 		
 		if(a.getSource()==btnCoButton && GameController.isGameSet()){
-			Client.connectServer(frame,console,fieldPseudo,fieldIP,fieldPort);
+			getController().connectServer();
 		}
 		
 		for(Component c : boardOpponent.getComponents()){
@@ -221,20 +221,52 @@ public class Draughtboard implements ActionListener {
 		this.boardPlayer = boardPlayer;
 	}
 
-	public static JTextArea getConsole() {
-		return console;
-	}
-
-	public void setConsole(JTextArea console) {
-		this.console = console;
-	}
-
 	public JTextField getFieldPseudo() {
 		return fieldPseudo;
 	}
 
 	public void setFieldPseudo(JTextField fieldPseudo) {
 		this.fieldPseudo = fieldPseudo;
+	}
+
+	public JTextField getFieldIP() {
+		return fieldIP;
+	}
+
+	public void setFieldIP(JTextField fieldIP) {
+		this.fieldIP = fieldIP;
+	}
+
+	public JTextField getFieldPort() {
+		return fieldPort;
+	}
+
+	public void setFieldPort(JTextField fieldPort) {
+		this.fieldPort = fieldPort;
+	}
+
+	public JButton getBtnCoButton() {
+		return btnCoButton;
+	}
+
+	public void setBtnCoButton(JButton btnCoButton) {
+		this.btnCoButton = btnCoButton;
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+
+	public JTextArea getConsole() {
+		return console;
+	}
+
+	public void setConsole(JTextArea console) {
+		this.console = console;
 	}
 
 
