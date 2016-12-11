@@ -69,7 +69,7 @@ public class Ship {
 	public boolean checkDeath() {
 		int nbHit = 0;
 		for (int i = 0; i < shipTable.length; i++) {
-			if ("death".equals(shipTable[i][2])) {
+			if ("touched".equals(shipTable[i][2])) {
 				nbHit++;
 			}
 		}

@@ -95,7 +95,8 @@ public class ServiceThread extends Thread {
 			if(requestToDo[0].equals("Win")){
 				taskLog("Le Win est recu niveau serveur");
 				opponentServiceThread.getOutput().println("Win;");
-				isItYourTurn = false;		
+				isItYourTurn = false;
+				interrupt();
 			}
 			}
 /*			if (requeteclient == null) {
